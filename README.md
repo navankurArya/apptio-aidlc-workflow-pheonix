@@ -55,6 +55,15 @@ Per-release human-readable notes live in **[`CHANGELOG.md`](CHANGELOG.md)**.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full customization rules and the upstream-branching workflow that keeps PR diffs clean.
 
+## Multi-folder workspace usage
+
+Pilot teams typically open this fork **alongside** one or more application repos as a multi-folder IDE workspace. In that layout the workflow recognises two roots:
+
+- `<DOCS-ROOT>` — the folder hosting `.kiro/aws-aidlc-rule-details/` (this fork). All AI-DLC documentation under `aidlc-docs/` is generated here, so every team's docs sit in a consistent location across pilots.
+- `<WORKSPACE-ROOT>` — the application repo(s) opened next to this fork. Generated code, build files, and tests land there.
+
+If only this fork is open, both roots collapse to the same folder and the behaviour is identical to single-folder use. See `common/terminology.md` and `inception/workspace-detection.md` in the rule details for the full resolution rules.
+
 ## Repo layout
 
 ```

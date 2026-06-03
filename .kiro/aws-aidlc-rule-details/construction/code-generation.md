@@ -24,10 +24,11 @@ This stage generates code for each unit of work through two integrated parts:
 - [ ] Validate unit is ready for code generation
 
 ## Step 2: Create Detailed Unit Code Generation Plan
-- [ ] Read workspace root and project type from `aidlc-docs/aidlc-state.md`
-- [ ] Determine code location (see Critical Rules for structure patterns)
+- [ ] Read `Docs Root`, `Workspace Roots`, and project type from `aidlc-docs/aidlc-state.md` (i.e., `<DOCS-ROOT>/aidlc-docs/aidlc-state.md`)
+- [ ] **If multiple `<WORKSPACE-ROOT>`s are recorded**: Declare in the unit plan which `<WORKSPACE-ROOT>` this unit's code targets. If ambiguous, ask the user using the standard question format.
+- [ ] Determine code location within the chosen `<WORKSPACE-ROOT>` (see Critical Rules for structure patterns)
 - [ ] **Brownfield only**: Review reverse engineering code-structure.md for existing files to modify
-- [ ] Document exact paths (never aidlc-docs/)
+- [ ] Document exact paths under `<WORKSPACE-ROOT>` (never under `<DOCS-ROOT>/aidlc-docs/`)
 - [ ] Create explicit steps for unit generation:
   - Project Structure Setup (greenfield only)
   - Business Logic Generation
@@ -101,15 +102,15 @@ This stage generates code for each unit of work through two integrated parts:
 - [ ] Load the context for that step (unit, dependencies, stories)
 
 ## Step 11: Execute Current Step
-- [ ] Verify target directory from plan (never aidlc-docs/)
+- [ ] Verify target directory from plan resolves under the unit's chosen `<WORKSPACE-ROOT>` (never under `<DOCS-ROOT>/aidlc-docs/`)
 - [ ] **Brownfield only**: Check if target file exists
 - [ ] Generate exactly what the current step describes:
   - **If file exists**: Modify it in-place (never create `ClassName_modified.java`, `ClassName_new.java`, etc.)
   - **If file doesn't exist**: Create new file
 - [ ] Write to correct locations:
-  - **Application Code**: Workspace root per project structure
-  - **Documentation**: `aidlc-docs/construction/{unit-name}/code/` (markdown only)
-  - **Build/Config Files**: Workspace root
+  - **Application Code**: Under the unit's `<WORKSPACE-ROOT>` per project structure
+  - **Documentation**: `<DOCS-ROOT>/aidlc-docs/construction/{unit-name}/code/` (markdown only)
+  - **Build/Config Files**: Under the unit's `<WORKSPACE-ROOT>`
 - [ ] Follow unit story requirements
 - [ ] Respect dependencies and interfaces
 
@@ -142,8 +143,8 @@ This stage generates code for each unit of work through two integrated parts:
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
 > Please examine the generated code at:
-> - **Application Code**: `[actual-workspace-path]`
-> - **Documentation**: `aidlc-docs/construction/[unit-name]/code/`
+> - **Application Code**: `[absolute path under the unit's <WORKSPACE-ROOT>]`
+> - **Documentation**: `<DOCS-ROOT>/aidlc-docs/construction/[unit-name]/code/`
 
 
 
@@ -172,13 +173,14 @@ This stage generates code for each unit of work through two integrated parts:
 ## Critical Rules
 
 ### Code Location Rules
-- **Application code**: Workspace root only (NEVER aidlc-docs/)
-- **Documentation**: aidlc-docs/ only (markdown summaries)
-- **Read workspace root** from aidlc-state.md before generating code
+- **Application code**: A `<WORKSPACE-ROOT>` listed in `aidlc-state.md` (NEVER `<DOCS-ROOT>/aidlc-docs/`)
+- **Documentation**: `<DOCS-ROOT>/aidlc-docs/` only (markdown summaries)
+- **Read `Docs Root` and `Workspace Roots`** from `aidlc-docs/aidlc-state.md` before generating code
+- **Multi-folder workspaces**: When multiple `<WORKSPACE-ROOT>`s are recorded, the unit plan must name the target `<WORKSPACE-ROOT>` for that unit's code
 
-**Structure patterns by project type**:
+**Structure patterns by project type** (paths are relative to the unit's chosen `<WORKSPACE-ROOT>`):
 - **Brownfield**: Use existing structure (e.g., `src/main/java/`, `lib/`, `pkg/`)
-- **Greenfield single unit**: `src/`, `tests/`, `config/` in workspace root
+- **Greenfield single unit**: `src/`, `tests/`, `config/` in the workspace root
 - **Greenfield multi-unit (microservices)**: `{unit-name}/src/`, `{unit-name}/tests/`
 - **Greenfield multi-unit (monolith)**: `src/{unit-name}/`, `tests/{unit-name}/`
 

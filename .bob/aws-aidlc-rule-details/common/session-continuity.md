@@ -23,7 +23,7 @@ B) Review a previous stage ([Show available stages])
 ```
 
 ## MANDATORY: Session Continuity Instructions
-1. **Always read aidlc-state.md first** when detecting existing project
+1. **Always read `<DOCS-ROOT>/aidlc-docs/aidlc-state.md` first** when detecting an existing project. The `<DOCS-ROOT>` is the workspace folder hosting the resolved AI-DLC rule-details directory; do not look for `aidlc-docs/` in other open workspace folders. From the state file, also read `Docs Root` and `Workspace Roots` and use those values for all subsequent path resolution in the resumed session.
 2. **Parse current status** from the workflow file to populate the prompt
 3. **MANDATORY: Load Previous Stage Artifacts** - Before resuming any stage, automatically read all relevant artifacts from previous stages:
    - **Reverse Engineering**: Read architecture.md, code-structure.md, api-documentation.md

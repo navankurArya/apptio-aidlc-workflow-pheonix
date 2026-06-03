@@ -2,6 +2,25 @@
 
 ## Core Terminology
 
+### Roots: DOCS-ROOT vs WORKSPACE-ROOT
+
+AI-DLC distinguishes two roots so the same workflow works in single-folder and multi-folder workspaces:
+
+**`<DOCS-ROOT>`**: The folder that contains the resolved AI-DLC rule details directory (e.g., `.kiro/aws-aidlc-rule-details/`, `.aidlc-rule-details/`, etc.). All AI-DLC documentation paths starting with `aidlc-docs/` resolve here. There is exactly one `<DOCS-ROOT>` per workflow run.
+
+**`<WORKSPACE-ROOT>`**: A folder that contains application code (source, build files, tests). A workflow run can target one or many workspace roots. Application code, build files, and configuration go here — never under `aidlc-docs/`.
+
+**Resolution rules**:
+- `<DOCS-ROOT>` is the workspace folder hosting the AI-DLC rule details directory selected during workspace detection.
+- If only one workspace folder is open, `<DOCS-ROOT>` and `<WORKSPACE-ROOT>` refer to the same folder.
+- If multiple workspace folders are open, the folder hosting the rule details is `<DOCS-ROOT>` and the others are candidate `<WORKSPACE-ROOT>`s. Workspace Detection records the selected workspace root(s) in `aidlc-state.md`.
+
+**Path conventions in this rule set**:
+- Any path written as `aidlc-docs/...` is relative to `<DOCS-ROOT>`.
+- Any path written as `Workspace root` or referring to application code is relative to a `<WORKSPACE-ROOT>` recorded in `aidlc-state.md`.
+
+See `inception/workspace-detection.md` for how these roots are detected and recorded.
+
 ### Phase vs Stage
 
 **Phase**: One of the three high-level lifecycle phases in AI-DLC

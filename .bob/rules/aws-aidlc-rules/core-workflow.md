@@ -19,6 +19,8 @@ The AI model intelligently assesses what stages are needed based on:
 
 All subsequent rule detail file references (e.g., `common/process-overview.md`, `inception/workspace-detection.md`) are relative to whichever rule details directory was resolved above.
 
+**`<DOCS-ROOT>` Resolution**: The workspace folder that contains the resolved rule-details directory above is the `<DOCS-ROOT>`. All paths written as `aidlc-docs/...` in this rule set MUST resolve to `<DOCS-ROOT>/aidlc-docs/...` — never to whichever folder the active editor file happens to live in. In multi-folder workspaces (e.g., the AI-DLC workflow repo opened alongside one or more application repos), `<DOCS-ROOT>` is the workflow repo, and application code lives in one or more separate `<WORKSPACE-ROOT>`s. See `inception/workspace-detection.md` for full resolution rules and `common/terminology.md` for definitions.
+
 **Common Rules**: ALWAYS load common rules at workflow start:
 - Load `common/process-overview.md` for workflow overview
 - Load `common/session-continuity.md` for session resumption guidance
@@ -508,32 +510,41 @@ The Operations stage will eventually include:
 
 ## Directory Structure
 
+AI-DLC distinguishes two kinds of roots — see `common/terminology.md` for full definitions:
+- **`<DOCS-ROOT>`**: One folder, holds all AI-DLC documentation under `aidlc-docs/`. Always equal to the workspace folder containing the resolved rule-details directory.
+- **`<WORKSPACE-ROOT>`**: One or more folders that hold application code, build files, and configuration. May or may not be the same folder as `<DOCS-ROOT>` (see layouts below).
+
 ```text
-<WORKSPACE-ROOT>/                   # ⚠️ APPLICATION CODE HERE
+<WORKSPACE-ROOT>/                   # ⚠️ APPLICATION CODE HERE (one or more)
 ├── [project-specific structure]    # Varies by project (see code-generation.md)
 │
-├── aidlc-docs/                     # 📄 DOCUMENTATION ONLY
-│   ├── inception/                  # 🔵 INCEPTION PHASE
-│   │   ├── plans/
-│   │   ├── reverse-engineering/    # Brownfield only
-│   │   ├── requirements/
-│   │   ├── user-stories/
-│   │   └── application-design/
-│   ├── construction/               # 🟢 CONSTRUCTION PHASE
-│   │   ├── plans/
-│   │   ├── {unit-name}/
-│   │   │   ├── functional-design/
-│   │   │   ├── nfr-requirements/
-│   │   │   ├── nfr-design/
-│   │   │   ├── infrastructure-design/
-│   │   │   └── code/               # Markdown summaries only
-│   │   └── build-and-test/
-│   ├── operations/                 # 🟡 OPERATIONS PHASE (placeholder)
-│   ├── aidlc-state.md
-│   └── audit.md
+<DOCS-ROOT>/                        # 📄 DOCUMENTATION ROOT
+└── aidlc-docs/                     # 📄 DOCUMENTATION ONLY
+    ├── inception/                  # 🔵 INCEPTION PHASE
+    │   ├── plans/
+    │   ├── reverse-engineering/    # Brownfield only
+    │   ├── requirements/
+    │   ├── user-stories/
+    │   └── application-design/
+    ├── construction/               # 🟢 CONSTRUCTION PHASE
+    │   ├── plans/
+    │   ├── {unit-name}/
+    │   │   ├── functional-design/
+    │   │   ├── nfr-requirements/
+    │   │   ├── nfr-design/
+    │   │   ├── infrastructure-design/
+    │   │   └── code/               # Markdown summaries only
+    │   └── build-and-test/
+    ├── operations/                 # 🟡 OPERATIONS PHASE (placeholder)
+    ├── aidlc-state.md
+    └── audit.md
 ```
 
+**Layouts**:
+- **Single-folder**: `<DOCS-ROOT>` and `<WORKSPACE-ROOT>` are the same folder. The structure above appears nested under one root.
+- **Multi-folder**: `<DOCS-ROOT>` (the AI-DLC workflow repo) is separate from one or more `<WORKSPACE-ROOT>`s (the application repos). Documentation always lives in `<DOCS-ROOT>/aidlc-docs/`; code always lives in a `<WORKSPACE-ROOT>`.
+
 **CRITICAL RULE**:
-- Application code: Workspace root (NEVER in aidlc-docs/)
-- Documentation: aidlc-docs/ only
-- Project structure: See code-generation.md for patterns by project type
+- Application code: A `<WORKSPACE-ROOT>` recorded in `aidlc-state.md` (NEVER in `<DOCS-ROOT>/aidlc-docs/`).
+- Documentation: `<DOCS-ROOT>/aidlc-docs/` only.
+- Project structure within a workspace root: See code-generation.md for patterns by project type.

@@ -283,3 +283,51 @@ User requests change
 6. **Log Thoroughly**: Document all changes for audit trail
 7. **Validate After**: Ensure workflow can continue smoothly
 8. **Be Flexible**: Workflow should adapt to user needs, not force rigid process
+
+---
+
+## Multi-Folder Workspace Behavior
+
+AI-DLC distinguishes `<DOCS-ROOT>` (where `aidlc-docs/` lives) from `<WORKSPACE-ROOT>` (where application code lives). See `common/terminology.md` for definitions and `inception/workspace-detection.md` for how they're resolved.
+
+Common scenarios that surface here:
+
+### "My docs landed in the wrong repo"
+
+**Cause**: `aidlc-docs/` was created in an application repo instead of the AI-DLC workflow repo (a stale `aidlc-state.md` or pre-multi-root convention may have placed it there).
+
+**Handling**:
+1. Confirm the intended `<DOCS-ROOT>` with the user (typically the workflow repo).
+2. Move `aidlc-docs/` from its current location to `<DOCS-ROOT>/aidlc-docs/`.
+3. Update `aidlc-state.md` `Roots` section: set `Docs Root` to the new location and re-list `Workspace Roots`.
+4. Search artifacts for any absolute paths pointing at the old docs location and rewrite them.
+5. Log the move in `audit.md` with both old and new paths.
+
+### "I want to switch which repo holds the code for this run"
+
+**Handling**:
+1. Update `Workspace Roots` in `aidlc-state.md` to the new target.
+2. For any unit whose code is already generated under the old root, decide with the user: relocate the code, regenerate against the new root, or leave it and treat the new root as additive.
+3. Log the change in `audit.md`.
+
+### "I added a second application repo mid-workflow"
+
+**Handling**:
+1. Append the new folder to `Workspace Roots` in `aidlc-state.md`.
+2. For new units going forward, the unit plan must declare which `<WORKSPACE-ROOT>` it targets (per `construction/code-generation.md`).
+3. Existing units stay on their original root unless explicitly relocated.
+4. Log the addition in `audit.md`.
+
+### Logging template for root changes
+
+```markdown
+## Root Change - [Docs Root | Workspace Root | Both]
+**Timestamp**: [ISO timestamp]
+**Change**: [Added | Removed | Replaced]
+**Old Value**: `[absolute path or "(none)"]`
+**New Value**: `[absolute path]`
+**Affected Artifacts**: [list of paths updated]
+**User Confirmation**: "[exact user response]"
+
+---
+```
