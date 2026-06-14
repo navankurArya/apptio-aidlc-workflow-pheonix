@@ -10,6 +10,40 @@ The current version, release date, shipped paths, and compatibility metadata liv
 
 ### Added
 
+- **Publish-artifacts tooling.** Two interchangeable paths for promoting
+  AIDLC inception docs from a feature branch into
+  `generated-docs/artifacts/<artifact-name>/` so teams can raise a PR onto
+  their fork's `main`:
+  - `scripts/publish-artifacts.sh` — pure bash + git mechanical publisher.
+    Resolves `<DOCS-ROOT>` by walking up for `.aidlc/`, `.aidlc-rule-details/`,
+    `.kiro/`, or `.amazonq/` rule-details directories; verifies mandatory
+    sources (`requirements.md`, `application-design.md`); discovers optional
+    sources (`components.md`, `component-methods.md`, `services.md`);
+    normalizes the artifact name to lowercase kebab-case; warns when
+    publishing from `main`/`master`; prompts before overwriting; copies
+    files verbatim; writes `manifest.yaml` with `publish_method: shell`.
+  - `docs/publish-artifacts-llm-playbook.md` — canonical behaviour spec for
+    the LLM-curated path. Same five-file output layout, with light prose
+    curation that strips AIDLC-process scaffolding (audit-trail references,
+    plan-file pointers, workflow-state language) before the docs land on
+    `main`. Manifest records `publish_method: llm-curated` plus a
+    `curated_by` block (model name + ISO-8601 date).
+  - `.kiro/steering/aws-aidlc-rules/publish-artifacts.md` (mirrored under
+    `.bob/rules/aws-aidlc-rules/`) — Kiro/Bob steering rule that triggers
+    the LLM playbook on phrases like `publish artifacts`,
+    `publish artifacts <name>`, `publish the <name> artifact`,
+    `curate and publish artifacts`, or `LLM publish artifacts`.
+  - `scripts/tests/` — pure-bash test suite (`run-tests.sh` plus
+    `test-smoke.sh`, `test-normalize.sh`, `test-prompts.sh`,
+    `test-sources.sh`, `test-docs-root.sh`, `test-end-to-end.sh`) covering
+    artifact-name normalization, validation, branch warning, overwrite
+    prompts, source discovery, `<DOCS-ROOT>` resolution across all four
+    rule-details layouts, and end-to-end copy + manifest generation.
+  - `scripts/README.md` and `scripts/tests/README.md` — usage and
+    test-conventions docs.
+- README "Publishing AIDLC artifacts to your fork's `main`" section
+  documenting both publish paths and the shared output layout.
+
 ### Changed
 
 ### Deprecated
