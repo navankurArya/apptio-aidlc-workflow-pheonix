@@ -13,6 +13,7 @@ User Stories focus on:
 ## Prerequisites
 - Workspace Detection must be complete
 - Requirements Analysis recommended (can reference requirements if available)
+- UX Screens recommended when present — if the UX Screens stage ran, reference `aidlc-docs/inception/ux-screens/screens.md` and `screen-flows.md` so stories align with the screen contract
 - Workflow Planning must indicate User Stories stage should execute
 
 ## Intelligent Assessment Guidelines

@@ -17,3 +17,5 @@ Desktop.ini
 *.log
 *.tmp
 *.bak
+
+aidlc-docs/*

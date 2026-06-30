@@ -90,6 +90,7 @@ All subsequent rule detail file references (e.g., `common/process-overview.md`, 
 - Workspace Detection (ALWAYS)
 - Reverse Engineering (CONDITIONAL - Brownfield only)
 - Requirements Analysis (ALWAYS - Adaptive depth)
+- UX Screens (CONDITIONAL)
 - User Stories (CONDITIONAL)
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
@@ -158,6 +159,30 @@ All subsequent rule detail file references (e.g., `common/process-overview.md`, 
 4. Execute at appropriate depth (minimal/standard/comprehensive)
 5. **Wait for Explicit Approval**: Follow approval format from requirements-analysis.md detailed steps - DO NOT PROCEED until user confirms
 6. **MANDATORY**: Log user's response in audit.md with complete raw input
+
+## UX Screens (CONDITIONAL)
+
+**INTELLIGENT ASSESSMENT**: Execute when the work has a user-facing surface (new or changed screens, flows, or interactions). Skip for backend-only, pure refactoring, infrastructure-only, API-only (no UI), or documentation changes. (Shares the same user-facing judgment as User Stories.)
+
+**Purpose**: Capture the screen/UX contract right after requirements. Screens may be **provided** (Figma via an MCP capability, or screenshots/links), **generated** (HTML mockups in a chosen component library — Carbon default), or already **given upfront** with the PRD. Produces a reviewable screen inventory that feeds Application Design and Units Generation, and reconciles the screens against requirements.
+
+**Requirements ownership**: UX Screens NEVER edits `requirements.md`. It produces a read-only reconciliation report; if requirements need to change, the user chooses **Revise Requirements**, which hands the findings back to Requirements Analysis (the sole owner of `requirements.md`) for regeneration + re-approval through its own gate.
+
+**UX Screens has three parts within one stage**:
+1. **Part 1 - Mode Selection + Planning**: Assess need, ask the adaptive sourcing question (use-upfront / provide / generate / hybrid / skip), collect answers, analyze for ambiguities, get approval
+2. **Part 2 - Ingest / Generate + Persist**: Produce screen artifacts (inventory, flows, component mapping, mockups) per the approved plan
+3. **Part 3 - Reconciliation**: Write a read-only screen↔requirements reconciliation report (conflicts / gaps / ambiguities)
+
+**Execution**:
+1. **MANDATORY**: Log any user input during this phase in audit.md
+2. Load all steps from `inception/ux-screens.md`
+3. **MANDATORY**: Perform intelligent assessment (Step 1 in ux-screens.md) to validate UX Screens is needed
+4. Reference requirements (and any screens provided upfront, per aidlc-state.md) when sourcing/deriving screens
+5. **PART 1 - Planning**: Ask the adaptive sourcing question, collect answers, analyze for ambiguities, get approval
+6. **PART 2 - Generation**: Produce screen artifacts under `aidlc-docs/inception/ux-screens/` per the approved plan
+7. **PART 3 - Reconciliation**: Write `aidlc-docs/inception/ux-screens/requirements-reconciliation.md` (read-only)
+8. **Wait for Explicit Approval**: Follow approval format from ux-screens.md — on **Revise Requirements**, route back to Requirements Analysis as a revision (which owns/regenerates `requirements.md`), then resume; UX Screens never edits `requirements.md`
+9. **MANDATORY**: Log user's response in audit.md with complete raw input
 
 ## User Stories (CONDITIONAL)
 
@@ -525,6 +550,7 @@ AI-DLC distinguishes two kinds of roots — see `common/terminology.md` for full
     │   ├── reverse-engineering/    # Brownfield only
     │   ├── requirements/
     │   ├── user-stories/
+    │   ├── ux-screens/             # Screens, flows, mockups (design artifacts)
     │   └── application-design/
     ├── construction/               # 🟢 CONSTRUCTION PHASE
     │   ├── plans/
