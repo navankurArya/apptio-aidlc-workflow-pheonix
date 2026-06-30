@@ -15,12 +15,14 @@ Application Design focuses on:
 - Workspace Detection must be complete
 - Requirements Analysis recommended (provides functional context)
 - User Stories recommended (user stories guide design decisions)
+- UX Screens recommended when present (screens guide component identification)
 - Execution plan must indicate Application Design stage should execute
 
 ## Step-by-Step Execution
 
 ### 1. Analyze Context
 - Read `aidlc-docs/inception/requirements/requirements.md` and `aidlc-docs/inception/user-stories/stories.md`
+- **If UX Screens executed**: read `aidlc-docs/inception/ux-screens/screens.md` and `aidlc-docs/inception/ux-screens/screen-flows.md`, and map identified components to the screens and elements they render
 - Identify key business capabilities and functional areas
 - Determine design scope and complexity
 

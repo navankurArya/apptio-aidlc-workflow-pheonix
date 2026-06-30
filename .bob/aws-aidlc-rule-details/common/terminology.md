@@ -51,12 +51,13 @@ See `inception/workspace-detection.md` for how these roots are detected and reco
 - Workspace Detection (ALWAYS)
 - Reverse Engineering (CONDITIONAL - Brownfield only)
 - Requirements Analysis (ALWAYS - Adaptive depth)
+- UX Screens (CONDITIONAL)
 - User Stories (CONDITIONAL)
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
 - Units Generation (CONDITIONAL)
 
-**Outputs**: Requirements, user stories, architectural decisions, unit definitions
+**Outputs**: Requirements, screen/UX contract, user stories, architectural decisions, unit definitions
 
 ### CONSTRUCTION PHASE
 **Purpose**: Detailed design and implementation  
@@ -96,6 +97,7 @@ See `inception/workspace-detection.md` for how these roots are detected and reco
 
 ### Conditional Stages
 - **Reverse Engineering**: Analyzing existing codebase (brownfield projects only)
+- **UX Screens**: Capturing the screen/UX contract — provided (Figma/screenshots) or generated (HTML mockups in a chosen component library) — with screen inventory, flows, component mapping, and a read-only reconciliation report against requirements (includes Mode Selection, Generation, and Reconciliation)
 - **User Stories**: Creating user stories and personas (includes Story Planning and Story Generation)
 - **Application Design**: Designing application components, methods, business rules, and services
 - **Units Generation**: Decomposing the system into units of work (includes internal planning and generation sub-steps, plus per-unit design)

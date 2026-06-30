@@ -75,6 +75,16 @@ Analyze whatever the user has provided:
    - Existing requirements documents (search workspace if mentioned)
    - Pasted content or file references
    - Convert any non-markdown documents to markdown format 
+   - **Screen inputs (UX provided upfront)**: detect any screens supplied with the PRD — image files/paths, Figma links, or pasted screenshots. **Do NOT block on, require, or defer requirements for them, and do NOT weave them into this first draft** (you cannot reliably derive requirements from screens before the PRD is understood). Simply **record their provenance and location** in `aidlc-docs/aidlc-state.md`, e.g.:
+
+     ```markdown
+     ## UX Screens
+     | Provenance | Location | Recorded At |
+     |---|---|---|
+     | provided-upfront | [paths/links] | Requirements Analysis |
+     ```
+
+     These screens are reconciled later by the UX Screens stage (which runs immediately after Requirements Analysis).
 
 ### Step 5: Thorough Completeness Analysis
 
@@ -178,13 +188,25 @@ Update `aidlc-docs/aidlc-state.md`:
 > 🔧 **Request Changes** -  Ask for modifications to the requirements if required based on your review 
 > [IF User Stories will be skipped, add this option:]
 > 📝 **Add User Stories** - Choose to Include **User Stories** stage (currently skipped based on project simplicity)  
-> ✅ **Approve & Continue** - Approve requirements and proceed to **[User Stories/Workflow Planning]**
+> ✅ **Approve & Continue** - Approve requirements and proceed to **[UX Screens/User Stories/Workflow Planning]**
 
 ---
 ```
 
-**Note**: Include the "Add User Stories" option only when User Stories stage will be skipped. Replace [User Stories/Workflow Planning] with the actual next stage name.
+**Note**: Include the "Add User Stories" option only when User Stories stage will be skipped. Replace [UX Screens/User Stories/Workflow Planning] with the actual next stage name — the first applicable of **UX Screens** (when the feature has a user-facing surface), then User Stories, then Workflow Planning.
 
    - Wait for explicit user approval before proceeding
    - Record approval response with timestamp
    - Update Requirements Analysis stage complete in aidlc-state.md
+
+### Step 10: Revision Mode (re-entry from UX Screens reconciliation)
+
+Requirements Analysis may be **re-entered as a revision** — most commonly when the UX Screens stage hands back screen-reconciliation findings (conflicts/gaps/ambiguities between the screens and `requirements.md`). When invoked this way:
+
+   - Treat the handed-back findings as **additional clarifying inputs** alongside any existing requirements context.
+   - Resolve them using the **same** Step 5/6 ambiguity discipline (ask `[Answer]:` questions for anything unclear; termination = all answers resolved OR the user explicitly asks to proceed).
+   - **Regenerate** `aidlc-docs/inception/requirements/requirements.md` to reflect the resolved findings.
+   - Re-present the requirements for approval using the **same** Step 9 approval gate.
+   - Log the re-run in `aidlc-docs/audit.md` and `aidlc-state.md` tagged `revision: screen reconciliation`, capturing the delta.
+
+   **This stage is the ONLY place `requirements.md` is created or edited.** The UX Screens stage never edits it. After re-approval, the normal "WHAT'S NEXT" routing applies (which returns to UX Screens so the screens can be re-reconciled against the updated requirements).

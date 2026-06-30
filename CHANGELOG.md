@@ -10,6 +10,45 @@ The current version, release date, shipped paths, and compatibility metadata liv
 
 ### Added
 
+- **UX Screens stage (Inception).** New conditional INCEPTION stage that runs
+  **immediately after Requirements Analysis, before User Stories**, for
+  user-facing work. Requirements are always drafted first; the stage then sources
+  screens **adaptively**:
+  - **Provided upfront** with the PRD — Requirements Analysis records their
+    provenance in `aidlc-state.md`; the stage offers *use-as-is / add-more /
+    replace*.
+  - **Provided at the step** — Figma (it simply asks whether a Figma MCP is
+    connected, falling back to screenshots/images/links) or image files/links.
+  - **Generated** — HTML mockups in a chosen component library (default IBM
+    Carbon; brownfield defaults to the existing app's library/patterns), **lo-fi
+    and banner-marked throwaway** by default.
+  - **Hybrid** — ingest an existing set and generate only the missing screens.
+  - Produces durable design artifacts under `aidlc-docs/inception/ux-screens/`
+    (`screens.md`, `screen-flows.md`, `design-system.md`, `mockups/`) that feed
+    Application Design and Units Generation.
+  - **Requirements reconciliation (read-only + hand-back):** the stage writes
+    `requirements-reconciliation.md` classifying conflicts/gaps/ambiguities
+    between the screens and `requirements.md`, but **never edits `requirements.md`
+    itself**. If requirements should change, the user chooses **Revise
+    Requirements**, which re-runs Requirements Analysis (the sole owner of
+    `requirements.md`) as a revision tagged `revision: screen reconciliation`,
+    re-approving through its own gate. The loop converges via normal forward
+    routing and re-enters UX Screens idempotently (never re-asking for screens).
+  - `inception/ux-screens.md` (mirrored under `.bob/`) — the stage rule detail
+    (Part 1 mode selection, Part 2 ingest/generate + persist, Part 3 read-only
+    reconciliation, completion + hand-back).
+  - Wired into `core-workflow.md` (stage list, execution block, directory
+    structure), `inception/requirements-analysis.md` (upfront-screen intake +
+    revision mode + next-stage routing), `inception/workflow-planning.md`
+    (determination, mermaid, templates), `inception/user-stories.md` (references
+    screens), and `inception/application-design.md` (loads screens for component
+    mapping).
+  - Overview surfaces updated: `common/process-overview.md`,
+    `common/welcome-message.md`, `common/terminology.md`.
+  - Generated HTML mockups are **design artifacts** under `aidlc-docs/`, not
+    application code — they do not violate the "code never in aidlc-docs" rule.
+    Screen artifacts stay branch-only; `publish-artifacts` is unchanged.
+
 - **Publish-artifacts tooling.** Two interchangeable paths for promoting
   AIDLC inception docs from a feature branch into
   `generated-docs/artifacts/<artifact-name>/` so teams can raise a PR onto
